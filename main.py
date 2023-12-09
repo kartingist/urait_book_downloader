@@ -9,7 +9,8 @@ from auth import *
 
 options = webdriver.ChromeOptions()
 options.add_argument('--disable-blink-features=AutomationControlled')
-options.headless = True
+# options.headless = True
+options.add_argument('headless')
 browser = webdriver.Chrome(options=options)
 browser.implicitly_wait(15)
 actions = ActionChains(browser)
@@ -29,26 +30,30 @@ def close_modal():
 
 def autorization():
     print('Идет авторизация')
-    browser.find_element(By.CLASS_NAME, 'user_info').click()
-    browser.find_element(By.XPATH, '/html/body/div[5]/div/div/div[2]/a[1]').click()
+    browser.find_element(By.XPATH, '/html/body/header/div/div/div[5]/div[3]/div[1]/a[1]').click()
+    # browser.find_element(By.CLASS_NAME, 'user_info').click()
+    # browser.find_element(By.ID, '/html/body/div[5]/div/div/div[2]/a[1]').click()
     time.sleep(1)
 
     email = browser.find_elements(By.XPATH, '//*[@id="email"]')
     email[1].send_keys(login)
-
-    password = browser.find_element(By.ID, 'password')
-    password.send_keys(password)
-
+    time.sleep(1)
+    password_1 = browser.find_element(By.XPATH, '//*[@id="password"]')
+    # password_1.click()
+    # password_1.send_keys()
+    password_1.send_keys(password)
+    # password.send_keys(password)
     browser.find_element(By.CSS_SELECTOR, '#login-form > div > div.content-center-form__submit > button').click()
-    browser.find_element(By.CSS_SELECTOR,
-                         'body > div.auth-confirmed-with-subscription > div > div.data > div.buttons > a.btn.btn-surface.btn-later').click()
+    # browser.find_element(By.XPATH, '//*[@id="login-form"]/div/div[5]/button').click()
     print('Авторизация пройдена')
 
 
 def open_book():
+    global book_name
+    book_name = browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[2]/div[1]/div/div[1]/h3').text
     print('Открываю книгу...')
-    browser.find_element(By.CSS_SELECTOR,
-                         '#book > div.page-content.page-content--big > div.page-content-head > div.book-about > div.book-preview__img > a').click()
+    print(book_name)
+    browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[3]/div[1]/a').click()
     browser.close()
     browser.switch_to.window(browser.window_handles[0])
     print('Книга открыта')
@@ -80,6 +85,7 @@ def save_book(get_pages):
 
 
 def create_file():
+
     with open(f'{book_name}.pdf', 'wb') as f:
         f.write(img2pdf.convert(img_list))
     print('Книга успешно создана')
@@ -88,7 +94,7 @@ def create_file():
 try:
     browser.set_window_size(1920, 1080)
     browser.get(url)
-    close_modal()
+    # close_modal()
     autorization()
     open_book()
     save_book(get_pages())
