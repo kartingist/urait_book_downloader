@@ -55,6 +55,10 @@ def open_book():
     book_name = browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[2]/div[1]/div/div[1]/h3').text
     print('Открываю книгу...')
     print(book_name)
+    js_script = '''\
+        document.getElementsByClassName('cookie-policy-promo')[0].setAttribute("hidden","");
+                '''
+    browser.execute_script(js_script)
     browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[3]/div[1]/a').click()
     browser.close()
     browser.switch_to.window(browser.window_handles[0])
