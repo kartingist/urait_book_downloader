@@ -59,6 +59,7 @@ def open_book():
         document.getElementsByClassName('cookie-policy-promo')[0].setAttribute("hidden","");
                 '''
     browser.execute_script(js_script)
+    browser.find_element(By.XPATH, '//*[@class="button-white--view button-green button-green--read"]').click()
     browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[3]/div[1]/a').click()
     browser.close()
     browser.switch_to.window(browser.window_handles[0])
