@@ -49,6 +49,8 @@ def autorization():
 
 
 def open_book():
+    #global book_name
+    #book_name = browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[2]/div[2]/div[1]/div[3]/div[1]/h3').text
     global book_name
     book_name = browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[2]/div[1]/div/div[1]/h3').text
     print('Открываю книгу...')
