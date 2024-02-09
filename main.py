@@ -51,8 +51,6 @@ def autorization():
 def open_book():
     #global book_name
     #book_name = browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[2]/div[2]/div[1]/div[3]/div[1]/h3').text
-    global book_name
-    book_name = browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[2]/div[1]/div/div[1]/h3').text
     print('Открываю книгу...')
     print(book_name)
     js_script = '''\
@@ -60,7 +58,6 @@ def open_book():
                 '''
     browser.execute_script(js_script)
     browser.find_element(By.XPATH, '//*[@class="button-white--view button-green button-green--read"]').click()
-    browser.find_element(By.XPATH, '//*[@id="content"]/div[1]/div[1]/div[3]/div[1]/a').click()
     browser.close()
     browser.switch_to.window(browser.window_handles[0])
     print('Книга открыта')
